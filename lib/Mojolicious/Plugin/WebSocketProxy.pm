@@ -98,6 +98,8 @@ Or to manually call RPC server:
 
 Using this module you can forward websocket JSON-RPC 2.0 requests to RPC server.
 
+The plugin understands the following parameters.
+
 =over
 
 =item B<actions> (mandatory)
@@ -113,19 +115,11 @@ request-response callbacks, other call parameters.
             ]
         });
         
-=item B<method> (optional)
-
-TODO
-
-=item B<msg_type> (optional)
-
-TODO
-
 =item B<before_forward> (optional)
 
     before_forward => [sub { my ($c, $req_storage) = @_; ... }, sub {...}]
 
-Hooks which will run after request is dispatched and before to start preparing RPC call.
+Global hooks which will run after request is dispatched and before to start preparing RPC call.
 It'll run every hook or until any hook returns some non-empty result.
 If returns any hash ref then that value will be JSON encoded and send to client,
 without forward action to RPC. To call RPC every hook should return empty or undefined value.
@@ -135,7 +129,7 @@ It's good place to some validation or subscribe actions.
     
     after_forward => [sub { my ($c, $result, $req_storage) = @_; ... }, sub {...}]
 
-Hooks which will run after every forwarded RPC call done.
+Global hooks which will run after every forwarded RPC call done.
 Or even forward action isn't running.
 It can view or modify result value from 'before_forward' hook.
 It'll run every hook or until any hook returns some non-empty result.
@@ -145,19 +139,35 @@ If returns any hash ref then that value will be JSON encoded and send to client.
 
     after_dispatch => [sub { my $c = shift; ... }, sub {...}]
     
-Hooks which will run at the end of request handling.
+Global hooks which will run at the end of request handling.
 
 =item B<before_get_rpc_response> (optional)
 
     before_get_rpc_response => [sub { my ($c, $req_storage) = @_; ... }, sub {...}]
 
-Hooks which will run when asynchronous RPC call is answered.
+Global hooks which will run when asynchronous RPC call is answered.
 
 =item B<after_got_rpc_response> (optional)
 
     after_got_rpc_response => [sub { my ($c, $req_storage) = @_; ... }, sub {...}]
 
-Hooks which will run after checked that response exists.
+Global hooks which will run after checked that response exists.
+
+=item B<before_send_api_response> (optional)
+
+    before_send_api_response => [sub { my ($c, $req_storage, $api_response) = @_; ... }, sub {...}]
+
+Global hooks which will run immediately before send API response.
+
+=item B<after_sent_api_response> (optional)
+
+    before_send_api_response => [sub { my ($c, $req_storage) = @_; ... }, sub {...}]
+
+Global hooks which will run immediately after sent API response.
+
+
+
+
 
 =item B<success> (optional)
 
@@ -178,19 +188,6 @@ Hook which will run if RPC returns value with error key, e.g.
     
 Hook which will run every time when success or error callbacks is running.
 It good place to modify API response format.
-
-=item B<before_send_api_response> (optional)
-
-    before_send_api_response => [sub { my ($c, $req_storage, $api_response) = @_; ... }, sub {...}]
-
-Hooks which will run immediately before send API response.
-
-=item B<after_sent_api_response> (optional)
-
-    before_send_api_response => [sub { my ($c, $req_storage) = @_; ... }, sub {...}]
-
-Hooks which will run immediately after sent API response.
-
 
 
 
