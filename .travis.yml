@@ -27,5 +27,6 @@ before_install:
     - "cpanm -n Test::Mojo"
     - "cpanm -n Test::MockModule"
     - "cpanm -n Test::MockObject"
+    - "cpanm -n --installdeps ."
 script:
     prove -l -I ~/perl-Mojo-WebSocketProxy/lib t
