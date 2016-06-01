@@ -11,11 +11,13 @@ before_install:
     - source ~/travis-perl-helpers/init
     - build-perl
     - perl -V
-    - git clone git@github.com:evostrov/perl-Mojo-WebSocketProxy.git
+    # TODO DELETE
+    - git clone https://4567a7cce4d5523d146047ec96cbb2a6204fd253@github.com/evostrov/perl-Mojo-WebSocketProxy.git
     - cd ~/perl-Mojo-WebSocketProxy
     - git checkout evgeniy/wsproxy_dispatcher
     - cd ~/
     - "cpanm -n Mojolicious"
+    # TODO
     # - "cpanm -n Mojo::WebSocketProxy::Dispatcher"
     - "cpanm -n MojoX::JSON::RPC"
     - "cpanm -n Guard"
