@@ -17,6 +17,22 @@ sub register {
             $url_setter->($c, $req_storage) if $url_setter && !$req_storage->{url};
             return $c->forward($req_storage);
         });
+    $app->helper(
+        wsp_error => sub {
+            my $c = shift;
+            my ($msg_type, $code, $message, $details) = @_;
+
+            my $error = {
+                code    => $code,
+                message => $message
+            };
+            $error->{details} = $details if (keys %$details);
+
+            return {
+                msg_type => $msg_type,
+                error    => $error,
+            };
+        });
 
     my $r = $app->routes;
     for ($r->under($config->{base_path})) {
