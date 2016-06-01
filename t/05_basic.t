@@ -4,7 +4,6 @@ use strict;
 use warnings;
 
 use JSON;
-use Data::Dumper;
 
 # Mojolicious app for testing
 package WebsocketProxy;

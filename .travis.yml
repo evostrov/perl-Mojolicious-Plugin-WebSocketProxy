@@ -1,0 +1,29 @@
+language: perl
+perl:
+    - "5.24"
+    - "5.22"
+    - "5.20"
+    - "5.18"
+    - "5.16"
+    - "5.14"
+before_install:
+    - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
+    - source ~/travis-perl-helpers/init
+    - build-perl
+    - perl -V
+    - git clone git@github.com:evostrov/perl-Mojo-WebSocketProxy.git
+    - cd ~/perl-Mojo-WebSocketProxy
+    - git checkout evgeniy/wsproxy_dispatcher
+    - cd ~/
+    - "cpanm -n Mojolicious"
+    # - "cpanm -n Mojo::WebSocketProxy::Dispatcher"
+    - "cpanm -n MojoX::JSON::RPC"
+    - "cpanm -n Guard"
+    - "cpanm -n JSON"
+    - "cpanm -n Data::UUID"
+    - "cpanm -n Test::More"
+    - "cpanm -n Test::Mojo"
+    - "cpanm -n Test::MockModule"
+    - "cpanm -n Test::MockObject"
+script:
+    prove -l -I ~/perl-Mojo-WebSocketProxy/lib t
