@@ -12,7 +12,7 @@ before_install:
     - build-perl
     - perl -V
     # TODO DELETE
-    - git clone https://4567a7cce4d5523d146047ec96cbb2a6204fd253@github.com/evostrov/perl-Mojo-WebSocketProxy.git
+    - git clone https://4567a7cce4d5523d146047ec96cbb2a6204fd253@github.com/evostrov/perl-Mojo-WebSocketProxy.git ~/perl-Mojo-WebSocketProxy
     - cd ~/perl-Mojo-WebSocketProxy
     - git checkout evgeniy/wsproxy_dispatcher
     - cd ~/
