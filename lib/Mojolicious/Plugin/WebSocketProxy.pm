@@ -9,12 +9,12 @@ sub register {
 
     die 'No actions found!' unless $config->{base_path};
 
-    my $url_getter;
-    $url_getter = delete $config->{url} if $config->{url} and ref($config->{url}) eq 'CODE';
+    my $url_setter;
+    $url_setter = delete $config->{url} if $config->{url} and ref($config->{url}) eq 'CODE';
     $app->helper(
         call_rpc => sub {
             my ($c, $req_storage) = @_;
-            $url_getter->($c, $req_storage) if $url_getter && !$req_storage->{url};
+            $url_setter->($c, $req_storage) if $url_setter && !$req_storage->{url};
             return $c->forward($req_storage);
         });
 
@@ -194,8 +194,8 @@ Callback for doing something every time when connection is closed.
 
 =head2 url
 
-RPC host url - store url getter function to get url dynamically for manually RPC calls.
-When using Forward call then url storing in request storage.
+RPC host url - store url string or function to set url dynamically for manually RPC calls.
+When using forwarded call then url storing in request storage.
 You can store url in every action options, or make it at before_forward hook.
 
 =head1 Actions options
